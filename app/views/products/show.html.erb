@@ -1,0 +1,50 @@
+<h1>Detalles de producto</h1>
+
+<div id="submenu">
+  <%= link_to 'Editar Detalles', edit_product_path(@product) %>
+  <%= link_to "Agregar a Inventario", :controller => "inventories", :action => "new", :id => @product %>
+  <%= link_to 'Eliminar Producto', @product, :confirm => 'Are you sure?', :method => :delete %>
+</div>
+
+<table>
+
+<tbody>
+  <tr>
+    <th width="25%">Nombre: </th>
+    <td><%=h @product.name %></td>
+  </tr>
+  <tr>
+    <th>Folio: </th>
+    <td><code class="id"><%=h "%04d"%@product.id %></code></td>
+  </tr>
+  <tr>
+    <th>Descripcion: </th>
+    <td><%=h @product.description %></td>
+  </tr>
+  <tr>
+    <th>Codigo/No.Parte: </th>
+    <td><%=h @product.barcode %></td>
+  </tr>
+  <tr>
+    <th>Costo: </th>
+    <td><%=h @product.cost %></td>
+  </tr>
+  <tr>
+    <th>Categoria: </th>
+    <td><%= link_to @product.category.name, :controller => :products, :cat => @product.category.id %></td>
+  </tr>
+  <tr>
+    <th>Proveedor: </th>
+    <td><%= link_to @product.supplier.name, :controller => :products, :sup => @product.supplier.id %></td>
+  </tr>
+  <tr>
+    <th>Consignacion?: </th>
+    <td><%= if @product.consignment then 'SI' else 'NO' end %></td>
+  </tr>
+  <tr>
+    <th>Imagen</th>
+    <td><%= image_tag 'products/'+@product.image %></td>
+  </tr>
+</tbody>
+
+</table>

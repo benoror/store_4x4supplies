@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+  date: 2010-01-20 17:10:06
+  amount: 9.99
+
+two:
+  name: MyString
+  description: MyText
+  date: 2010-01-20 17:10:06
+  amount: 9.99

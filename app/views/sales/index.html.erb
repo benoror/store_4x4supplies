@@ -1,0 +1,40 @@
+<h1>Ventas</h1>
+
+<table>
+
+<thead>
+  <tr>
+    <th>Producto</th>
+    <th>Fecha</th>
+    <th>Precio</th>
+  </tr>
+</thead>
+
+<% @total = 0 %>
+
+<tbody>
+<% @sales.each do |sale| %>
+  <tr title="Creo: <%= sale.who %> Actualizo: <%= sale.who_last %>">
+    <td>
+      <%= sale.inventory.product.name %> (<%= sale.inventory.product.barcode%>)<br />
+      <br />
+      <%= link_to 'Editar', edit_sale_path(sale), :class => 'button-to' %>
+      <%= link_to 'Eliminar', sale, :confirm => 'Are you sure?', :method => :delete, :class => 'button-to' %>
+      <br />
+      <br />
+    </td>
+    <td><%=h sale.sale_date.to_s(:purchase)%></td>
+    <td><%=h number_to_currency(sale.sale_price) %></td>
+    <% @total += sale.sale_price %>
+  </tr>
+<% end %>
+</tbody>
+
+<tfoot>
+  <tr>
+    <td colspan="2"><b>Total</b></td>
+    <td><b><%= number_to_currency(@total) %></b></td>
+  </tr>
+</tfoot>
+
+</table>

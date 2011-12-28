@@ -1,0 +1,48 @@
+<table>
+
+<caption>
+  <%= f.error_messages %>
+</caption>
+ 
+<tbody>
+  <tr>
+    <th width="25%"><%= f.label 'Nombre' %></th>
+    <td><%= f.text_field :name, :size => 50 %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Descripcion' %></th>
+    <td><%= f.text_area :description, :rows => 3, :cols => 49 %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Codigo/No.Parte' %></th>
+    <td><%= f.text_field :barcode, :size => 50 %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Costo default' %></th>
+    <td><%= f.text_field :cost, :size => 50 %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Categoria' %></th>
+    <td>
+      <%= f.select :category_id, Category.all.collect {|c| [ c.name, c.id ] }, {:prompt => 'Select Category'}  %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Proveedor' %></th>
+    <td>
+      <%= f.select :supplier_id, Supplier.all.collect {|c| [ c.name, c.id ] }, {:prompt => 'Select Supplier'}  %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Consignacion?' %></th>
+    <td>
+      <%= f.check_box :consignment %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Imagen' %></th>
+    <td><%= f.text_field :image, :size => 50 %></td>
+  </tr>
+</tbody>
+
+</table>

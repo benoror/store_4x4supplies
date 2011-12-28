@@ -1,0 +1,90 @@
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    update_vals();
+  });
+
+  function update_vals() {
+    var cost = parseFloat($('input#inventory_cost').val());
+    var tax_ratio = parseFloat($('input#inventory_tax_ratio').val());
+    var import_ratio = parseFloat($('input#inventory_import_ratio').val());
+    var currency_ratio = parseFloat($('input#inventory_currency_ratio').val());
+    var top_ratio = parseFloat($('input#inventory_top_ratio').val());
+    var bottom_ratio = parseFloat($('input#inventory_bottom_ratio').val());
+
+    var precost = cost*(1+tax_ratio)*(1+import_ratio)*(currency_ratio);
+
+    $('input#top_price').val(Math.ceil((precost*(1+top_ratio)/10))*10);
+    $('input#bottom_price').val(Math.ceil((precost*(1+bottom_ratio)/10))*10);
+  }
+
+</script>
+
+<h1>Agregar a inventario</h1>
+
+<% form_for(@inventory) do |f| %>
+
+<div id="submenu">
+  <%= f.submit 'Guardar Inventario' %>
+</div>
+
+<table>
+
+<caption>
+  <%= f.error_messages %>
+</caption>
+ 
+<tbody>
+  <tr>
+    <th width="25%"><%= f.label 'Producto' %></th>
+    <td>
+      <%= f.hidden_field :product_id %>
+      <code class="id"><%= f.label "%04d"%@inventory.product.id %></code>
+      <%= f.label @inventory.product.name %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Fecha de Compra' %></th>
+    <td><%= f.date_select :purchase_date, :include_blank => true %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Costo unit.' %></th>
+    <td><%= f.text_field :cost, :value => @inventory.product.cost, :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Tax unit. %' %></th>
+    <td><%= f.text_field :tax_ratio, :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Aduana unit. %' %></th>
+    <td><%= f.text_field :import_ratio, :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Tipo de cambio' %></th>
+    <td><%= f.text_field :currency_ratio, :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= f.label '% Utilidad Alto' %></th>
+    <td>
+      <%= f.text_field :top_ratio, :onchange => 'update_vals();' %>
+      <%= text_field_tag :top_price, '', :disabled => true %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label '% Utilidad Bajo' %></th>
+    <td>
+      <%= f.text_field :bottom_ratio, :onchange => 'update_vals();' %>
+      <%= text_field_tag :bottom_price, '', :disabled => true %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Cantidad' %></th>
+    <td>
+      <%= f.select :quantity, options_for_select([""].concat((1..10).to_a)) %>
+    </td>
+  </tr>
+</tbody>
+
+</table>
+
+<% end %>

@@ -1,0 +1,52 @@
+<% form_tag 'products', :method => :get, :class => 'search' do -%>
+  <%= text_field_tag :search %>
+  <%= submit_tag :buscar %>
+<% end -%>
+
+<h1>Productos</h1>
+<h2>
+<%= ' Categoria: <b>'+Category.find_by_id(params[:cat]).name+'</b>' if params[:cat]%>
+<%= ' Proveedor: <b>'+Supplier.find_by_id(params[:sup]).name+'</b>' if params[:sup]%>
+</h2>
+
+<div id="submenu">
+  <%= link_to 'Nuevo Producto', new_product_path %>
+  <%= link_to 'Ver Categorias', categories_path %>
+  <%= link_to 'Ver Proveedores', suppliers_path %>
+</div>
+
+<%= "<br /><h2>Busqueda: #{params[:search]}</h2>" if params[:search ]%>
+<br />
+<% paginated_section  @products, { :previous_label => '&lt;', :next_label => '&gt;' } do %>
+
+<table>
+
+<thead>
+  <tr>
+    <th>Producto</th>
+    <th>Codigo</th>
+    <th>Categoria</th>
+    <th>Proveedor</th>
+  </tr>
+</thead>
+
+<tbody>
+<% @products.each do |product| %>
+  <tr title="Creo: <%= product.who %> Actualizo: <%= product.who_last %>">
+    <td>
+      <code class="id"><%=h "%04d"%product.id %></code>
+      <% unless Inventory.exists?(:product_id => product.id) %>
+        <code class="soldout">NO HAY</code>
+      <% end %>
+      <%= link_to highlight(product.name,params[:search]), product %><br />
+    </td>
+    <td><%= highlight(product.barcode,params[:search]) %></td>
+    <td><%= link_to product.category.name, :controller => :products, :cat => product.category.id %></td>
+    <td><%= link_to product.supplier.name, :controller => :products, :sup => product.supplier.id %></td>
+  </tr>
+<% end %>
+</tbody>
+
+</table>
+
+<% end %>

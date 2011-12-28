@@ -1,0 +1,36 @@
+<h1>Nuevo gasto</h1>
+
+<% form_for(@expense) do |f| %>
+
+  <div id="submenu">
+    <%= f.submit 'Guardar Gasto' %>
+  </div>
+
+  <table>
+
+  <caption>
+    <%= f.error_messages %>
+  </caption>
+
+  <tbody>
+    <tr>
+      <th width="25%"><%= f.label 'Concepto' %></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Descripcion' %></th>
+      <td><%= f.text_area :description %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Fecha' %></th>
+      <td><%= f.date_select :date, :include_blank => true %></td>
+    </tr>
+    <tr>
+      <th>Monto MXP</th>
+      <td><%= f.text_field :amount %></td>
+    </tr>
+  </tbody>
+
+  </table>
+
+<% end %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  cutomer_id: 1
+  place: MyString
+  date: 2010-01-07
+
+two:
+  cutomer_id: 1
+  place: MyString
+  date: 2010-01-07

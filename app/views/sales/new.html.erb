@@ -1,0 +1,33 @@
+<h1>Nueva venta</h1>
+
+<% form_for(@sale) do |f| %>
+
+<%= f.hidden_field :inventory_id %>
+
+<div id="submenu">
+  <%= f.submit 'Guardar Venta' %>
+</div>
+
+<table>
+
+<caption>
+  <%= f.error_messages %>
+</caption>
+
+<tbody>
+  <tr>
+    <th width="25%"><%= f.label 'Producto'%></th>
+    <td><b><%= @inventory.product.name %> (<%= @inventory.product.barcode%>)</b></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Fecha' %></th>
+    <td><%= f.date_select :sale_date, :default => Time.now %></td>
+  </tr>
+  <tr>
+    <th><%= f.label 'Precio' %></th>
+    <td><%= f.text_field :sale_price, :value => @price %></td>
+  </tr>
+</tbody>
+
+</table>
+<% end %>

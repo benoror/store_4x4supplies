@@ -1,0 +1,2 @@
+#page.replace_html("rightcolumn", :partial => "inventory", :object => inventory)
+page.replace_html("rightcolumn", :partial => 'inventory', :object => inventory)

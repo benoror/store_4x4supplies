@@ -1,0 +1,48 @@
+<h1>Configuracion</h1>
+
+<% form_for :settings, :url => { :controller => "settings", :action => "update" } do |f| %>
+
+<% if authorized_logged_in? %>
+  <div id="submenu">
+      <%= f.submit 'Guardar Configuracion' %>
+  </div>
+<% end %>
+
+<h2>General</h2>
+<table>
+
+<caption>
+  *Los inventarios, productos, ventas, etc. ya existentes no sufriran ningun cambio. Solo los nuevos a partir de la modificacion de los valores por defecto.
+  <%= f.error_messages %>
+</caption>
+
+<tbody>
+  <tr>
+    <th width="40%">Ultima fecha de compras</th>
+    <td><%= f.date_select :purchase_date, { :default => Settings.purchase_date }, { :disabled => !authorized_logged_in? } %></td>
+  </tr>
+  <tr>
+    <th>Ultimo tipo de cambio USD a MXP</th>
+    <td><%= f.text_field :currency_ratio, :value => Settings.currency_ratio, :disabled => !authorized_logged_in? %></td>
+  </tr>
+  <tr>
+    <th>Tax US</th>
+    <td><%= f.text_field :tax_ratio, :value => Settings.tax_ratio, :disabled => !authorized_logged_in? %></td>
+  </tr>
+  <tr>
+    <th>Promedio Aduanal</th>
+    <td><%= f.text_field :import_ratio, :value => Settings.import_ratio, :disabled => !authorized_logged_in? %></td>
+  </tr>
+  <tr>
+    <th>Procentaje de utilidad alto</th>
+    <td><%= f.text_field :top_ratio, :value => Settings.top_ratio, :disabled => !authorized_logged_in? %></td>
+  </tr>
+  <tr>
+    <th>Procentaje de utilidad bajo</th>
+    <td><%= f.text_field :bottom_ratio, :value => Settings.bottom_ratio, :disabled => !authorized_logged_in? %></td>
+  </tr>
+</tbody>
+
+</table>
+
+<% end %>

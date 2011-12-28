@@ -1,0 +1,24 @@
+<h1>Categorias</h1>
+
+<div id="submenu">
+  <%= link_to 'Nueva Categoria', new_category_path %>
+</div>
+
+<table>
+  <tr>
+    <th width="25%">Nombre</th>
+    <th width="55%">Descripcion</th>
+    <th width="20%">Acciones</th>
+  </tr>
+
+<% @categories.each do |category| %>
+  <tr>
+    <td><%= link_to category.name, :controller => :products, :cat => category.id %></td>
+    <td><%=h category.description %></td>
+    <td>
+      <%= link_to 'Editar', edit_category_path(category) %> | 
+      <%= link_to 'Eliminar', category, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>

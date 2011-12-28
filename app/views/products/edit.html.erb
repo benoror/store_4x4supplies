@@ -1,0 +1,11 @@
+<h1>Editar detalles de producto</h1>
+
+<% form_for(@product) do |f| %>
+
+<div id="submenu">
+  <%= f.submit 'Guardar Detalles' %>
+</div>
+
+<%= render :partial => 'table_form', :locals => { :f => f } %>
+
+<% end %>

@@ -1,0 +1,35 @@
+<h1>Cotizaciones</h1>
+
+<table>
+  <tr>
+    <th>Concepto</th>
+    <th>Costo</th>
+    <th>Precio</th>
+    <th>Cliente</th>
+    <th>Notificado</th>
+  </tr>
+
+<% @bids.each do |bid| %>
+  <tr title="Creo: <%= bid.who %> Actualizo: <%= bid.who_last %>">
+    <td>
+      <b><%=h bid.product %></b><%=h ' ('+bid.barcode+')' unless bid.barcode.empty? %> <%=h bid.vehicle %><br />
+      <%=h bid.description %><br />
+      <br />
+      <%= link_to 'Editar', edit_bid_path(bid), :class => "button-to" %>
+      <%= link_to 'Borrar', bid, :confirm => 'Are you sure?', :method => :delete, :class => "button-to" %>
+      <br />
+      <br />
+    </td>
+    <td><%=h number_to_currency(bid.cost) %></td>
+    <td><%=h number_to_currency(bid.price) %></td>
+    <td><%= link_to bid.customer.fullname, edit_customer_path(bid.customer) %></td>
+    <td>
+      <% if bid.notified %>
+        <b style="background-color: #0F0;">SI</b>
+      <% else %>
+        <b style="background-color: #F00;">NO</b>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,53 @@
+<h1>Editar cotizacion</h1>
+
+<% form_for(@bid) do |f| %>
+
+  <div id="submenu">
+    <%= f.submit 'Guardar Cotizacion' %>
+  </div>
+
+  <%= f.hidden_field :customer_id %>
+  
+  <table>
+
+  <caption>
+    <%= f.error_messages %>
+  </caption>
+
+  <tbody>
+    <tr>
+      <th width="25%"><%= f.label 'Cliente' %></th>
+      <td><b><%= @bid.customer.fullname %></b></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Producto' %></th>
+      <td><%= f.text_field :product %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Codigo' %></th>
+      <td><%= f.text_field :barcode %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Vehiculo' %></th>
+      <td><%= f.text_field :vehicle, :value => @bid.customer.vehicle %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Descripcion' %></th>
+      <td><%= f.text_area :description %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Costo proveedor' %></th>
+      <td><%= f.text_field :cost %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Precio venta' %></th>
+      <td><%= f.text_field :price %></td>
+    </tr>
+    <tr>
+      <th><%= f.label '¿Notificado?' %></th>
+      <td><%= f.check_box :notified %></td>
+    </tr>
+  </tbody>
+
+  </table>
+<% end %>

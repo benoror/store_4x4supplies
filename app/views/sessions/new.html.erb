@@ -1,0 +1,62 @@
+<h1>Acceso</h1>
+
+<% if logged_in? %>
+  <% form_tag :controller => 'users', :action => 'update_password', :method => :put do %>
+
+    <div id="submenu">
+      <%= link_to 'Salir', logout_path %>
+      <%= submit_tag 'Cambiar Contrase&ntilde;a' %>
+    </div>
+
+    <table>
+      <tbody>
+        <tr>
+          <th width="30%">Usuario</th>
+          <td><%= current_user.login %></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><%= current_user.email %></td>
+        </tr>
+        <tr>
+          <th width="40%">Contrase&ntilde;a Actual</th>
+          <td><%= password_field_tag :old_password, @old_password %></td>
+        </tr>
+        <tr>
+          <th>Nueva Contrase&ntilde;a</th>
+          <td><%= password_field_tag :password, {} %></td>
+        </tr>
+        <tr>
+          <th>Confirmar Contrase&ntilde;a</th>
+          <td><%= password_field_tag :password_confirmation, {} %></td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+
+<% else %>
+
+  <% form_tag session_path do -%>
+    <table>
+      <tbody>
+        <tr>
+          <th width="30%">Usuario</th>
+          <td><%= text_field_tag 'login', @login %></td>
+        </tr>
+        <tr>
+          <th>Contrase&ntilde;a</th>
+          <td><%= password_field_tag 'password', nil %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Uncomment this if you want this functionality
+    <p><%#= label_tag 'remember_me', 'Remember me' %>
+    <%#= check_box_tag 'remember_me', '1', @remember_me %></p>
+    -->
+
+    <div id="submenu">
+      <%= submit_tag 'Accesar' %>
+    </div>
+  <% end -%>
+<% end %>

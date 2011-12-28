@@ -1,0 +1,15 @@
+<%
+@left_count = Inventory.count(:conditions => "product_id = #{inventory.product_id}
+                                              AND id IN (SELECT inventory_id FROM sales)")
+%>
+
+<span class="pgroup" ><%= (inventory.count.to_i-@left_count).to_s+'/'+inventory.count+' &times;' %></span>
+<%= link_to highlight(inventory.product.name,params[:search]), inventory.product %><br />
+Folio: <%= "%04d"%inventory.product.id %><br />
+<% if inventory.product.consignment %>
+  <span class="consignment">CONSIGNACION</span>
+<% end %>
+Proveedor: <%= inventory.product.supplier.name %><br />
+Codigo: <%= highlight(inventory.product.barcode,params[:search]) %><br />
+Fecha Compra: <%=h inventory.purchase_date.to_s(:purchase) %><br />
+<br />

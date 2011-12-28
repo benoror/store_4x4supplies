@@ -1,0 +1,47 @@
+<h1>Banco</h1>
+
+<% if authorized_logged_in? %>
+  <div id="submenu">
+    <%= link_to 'Nueva Transaccion', new_transaction_path %>
+  </div>
+<% end %>
+
+<table>
+
+<thead>
+  <tr>
+    <th>Fecha</th>
+    <th>Concepto</th>
+    <th>Cargo</th>
+    <th>Abono</th>
+  </tr>
+</thead>
+
+<% @total = 0 %>
+
+<tbody>
+<% @transactions.each do |transaction| %>
+  <tr title="Creo: <%= transaction.who %>" >
+    <td>
+      <% if authorized_logged_in? %>
+        <%= link_to 'Eliminar', transaction, :confirm => 'Are you sure?', :method => :delete, :class => "button-to" %>
+      <% end %>
+      <%=h transaction.date.to_s(:purchase) %>
+    </td>
+    <td><%=h transaction.name %></td>
+    <td><%=h transaction.charge %></td>
+    <% @total -= transaction.charge.to_f %>
+    <td><%=h transaction.payment %></td>
+    <% @total += transaction.payment.to_f %>
+  </tr>
+<% end %>
+</tbody>
+
+<tfoot>
+  <tr>
+    <td colspan="3"><b>Saldo</b></td>
+    <td><b><%= number_to_currency(@total) %></b></td>
+  </tr>
+</tfoot>
+
+</table>

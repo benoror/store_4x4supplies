@@ -1,0 +1,47 @@
+<h1>Gastos</h1>
+
+<div id="submenu">
+  <%= link_to 'Nuevo Gasto', new_expense_path %>
+</div>
+
+<table>
+
+<thead>
+  <tr>
+    <th>Concepto</th>
+    <th>Fecha</th>
+    <th>Monto MXP</th>
+    <th>Por</th>
+  </tr>
+</thead>
+
+<% @total = 0 %>
+
+<tbody>
+<% @expenses.each do |expense| %>
+  <tr title="Creo: <%= expense.who %> Actualizo: <%= expense.who_last %>">
+    <td>
+      <b><%=h expense.name %></b><br />
+      <%= expense.description+'<br />' unless expense.description.empty? %>
+      <br />
+      <%= link_to 'Editar', edit_expense_path(expense), :class => "button-to" %>
+      <%= link_to 'Borrar', expense, :confirm => 'Are you sure?', :method => :delete, :class => "button-to" %>
+      <br />
+      <br />
+    </td>
+    <td><%=h expense.date.to_s(:purchase) %></td>
+    <td><%=h number_to_currency(expense.amount) %></td>
+    <td><%=h expense.who %></td>
+    <% @total += expense.amount %>
+  </tr>
+<% end %>
+</tbody>
+
+<tfoot>
+  <tr>
+    <td colspan="2"><b>Total</b></td>
+    <td><b><%= number_to_currency(@total) %></b></td>
+  </tr>
+</tfoot>
+
+</table>

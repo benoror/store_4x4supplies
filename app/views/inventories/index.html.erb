@@ -1,0 +1,104 @@
+<% form_tag 'inventories', :method => :get, :class => 'search' do -%>
+  <%= text_field_tag :search %>
+  <%= submit_tag :buscar %>
+<% end -%>
+
+<h1>Inventarios</h1>
+
+<div id="submenu">
+  <%= link_to 'Calcula Precios', {:controller => "inventories", :action => "calculator"} %>
+</div>
+
+<%= "<br /><h2>Busqueda: #{params[:search]}</h2>" if params[:search ]%>
+<br />
+<% paginated_section @products, :previous_label => '&lt;', :next_label => '&gt;' do %>
+
+<table>
+
+<thead>
+  <tr>
+    <th>Productos</th>
+    <th>Costos</th>
+    <th>Venta MXP</th>
+  </tr>
+</thead>
+
+<tbody>
+<% @inventories.each do |inventory| %>
+  <tr title="Creo: <%= inventory.who %> Actualizo: <%= inventory.who_last %>">
+    <td>
+      <%= render :partial => 'inventory', :object => inventory %>
+      <%= link_to "Venta", { :controller => "sales", :action => "new", :pid => inventory.product_id }, :class => "button-to" %>
+      <%= link_to 'Aumentar', { :action => 'clone', :id => inventory, :retpage => params[:page] }, :class => "button-to"  %>
+      <%= link_to 'Disminuir', inventory_path(inventory)+'?retpage='+params[:page], :confirm => 'Are you sure?', :method => :delete, :class => "button-to"  %>
+      <%= link_to 'Editar', edit_inventory_path(inventory)+'?retpage='+params[:page], :class => "button-to" %>
+    </td>
+    <td>
+     
+      <table class="inner">
+        <thead>
+          <tr>
+            <th>Costo</th>
+            <th>Unitario</th>
+            <th><%= ' &times; '+inventory.count %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr> 
+            <td>Neto:</td>
+            <td><%=h number_to_currency(inventory.cost) %></td>
+            <td><%=h number_to_currency(inventory.cost*inventory.count.to_d) %></td>
+          </tr>
+          <tr> 
+            <td>Tax (<%=h number_to_percentage(inventory.tax_ratio*100, :precision => 2) %>):</td>
+            <td><%=h number_to_currency(inventory.cost*inventory.tax_ratio) %><br /></td>
+            <td><%=h number_to_currency(inventory.cost*inventory.tax_ratio*inventory.count.to_d) %><br /></td>
+          </tr>
+          <tr> 
+            <td>Aduana (<%=h number_to_percentage(inventory.import_ratio*100, :precision => 2) %>):</td>
+            <td><%=h number_to_currency((inventory.cost+inventory.cost*inventory.tax_ratio)*inventory.import_ratio) %></td>
+            <td><%=h number_to_currency(inventory.cost*inventory.import_ratio*inventory.count.to_d) %></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr> 
+            <td>Total USD:</td>
+            <td><%=h number_to_currency(inventory.total) %></td>
+            <td><%=h number_to_currency(inventory.total.to_d*inventory.count.to_d) %></td>
+          </tr>
+          <tr> 
+            <td>Total MXP (<%=h number_to_currency(inventory.currency_ratio) %>):</td>
+            <td><b><%=h number_to_currency(inventory.total.to_d*inventory.currency_ratio) %></b></td>
+            <td><b><%=h number_to_currency(inventory.total.to_d*inventory.currency_ratio*inventory.count.to_d) %></b></td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </td>
+    <td>
+     
+      <table class="inner">
+        <tbody>
+          <tr>
+            <th><%=h number_to_percentage(inventory.top_ratio*100, :precision => 2) %></th>
+          </tr>
+          <tr>
+            <td><big><b><%=h number_to_currency( ((inventory.top_price.to_d*inventory.currency_ratio)/10).ceil*10) %></b></big></td>
+          </tr>
+          <tr>
+            <th><%=h number_to_percentage(inventory.bottom_ratio*100, :precision => 2) %></th>
+          </tr>
+          <tr>
+            <td><big><b><%=h number_to_currency( ((inventory.bottom_price.to_d*inventory.currency_ratio)/10).ceil*10) %></b></big></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </td>
+  </tr>
+<% end %>
+</tbody>
+
+</table>
+
+<% end %>

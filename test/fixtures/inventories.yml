@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  product_id: 1
+  purchase_date: 2010-01-07 15:09:37
+
+two:
+  product_id: 1
+  purchase_date: 2010-01-07 15:09:37

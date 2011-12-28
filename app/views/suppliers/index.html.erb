@@ -1,0 +1,24 @@
+<h1>Proveedores</h1>
+
+<div id="submenu">
+  <%= link_to 'Nuevo Proveedor', new_supplier_path %>
+</div>
+
+<table>
+  <tr>
+    <th width="25%">Nombre</th>
+    <th width="55%">Descripcion</th>
+    <th width="20%">Acciones</th>
+  </tr>
+
+<% @suppliers.each do |supplier| %>
+  <tr>
+    <td><%= link_to supplier.name, :controller => :products, :sup => supplier.id %></td>
+    <td><%=h supplier.description %></td>
+    <td>
+      <%= link_to 'Editar', edit_supplier_path(supplier) %> | 
+      <%= link_to 'Eliminar', supplier, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>

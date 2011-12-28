@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2010-01-25 11:11:28
+  name: MyString
+  charge: 9.99
+  payment: 9.99
+
+two:
+  date: 2010-01-25 11:11:28
+  name: MyString
+  charge: 9.99
+  payment: 9.99

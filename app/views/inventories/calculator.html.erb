@@ -1,0 +1,60 @@
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    update_vals();
+  });
+
+  function update_vals() {
+    var cost = parseFloat($('input#cost').val());
+    var tax_ratio = parseFloat($('input#tax_ratio').val());
+    var import_ratio = parseFloat($('input#import_ratio').val());
+    var currency_ratio = parseFloat($('input#currency_ratio').val());
+    var top_ratio = parseFloat($('input#top_ratio').val());
+    var bottom_ratio = parseFloat($('input#bottom_ratio').val());
+
+    var precost = cost*(1+tax_ratio)*(1+import_ratio)*(currency_ratio);
+
+    $('input#top_price').val(Math.ceil((precost*(1+top_ratio)/10))*10);
+    $('input#bottom_price').val(Math.ceil((precost*(1+bottom_ratio)/10))*10);
+  }
+
+</script>
+
+<h1>Calcula Precios</h1>
+
+<table>
+
+<tbody>
+  <tr>
+    <th><%= label_tag 'Costo unit.' %></th>
+    <td><%= text_field_tag :cost, "0", :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= label_tag 'Tax unit. %' %></th>
+    <td><%= text_field_tag :tax_ratio, @tax_ratio, :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= label_tag 'Aduana unit. %' %></th>
+    <td><%= text_field_tag :import_ratio, @import_ratio, :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= label_tag 'Tipo de cambio' %></th>
+    <td><%= text_field_tag :currency_ratio, @currency_ratio, :onchange => 'update_vals();' %></td>
+  </tr>
+  <tr>
+    <th><%= label_tag '% Utilidad Alto' %></th>
+    <td>
+      <%= text_field_tag :top_ratio, @top_ratio, :onchange => 'update_vals();' %>
+      <%= text_field_tag :top_price, '0', :disabled => true %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= label_tag '% Utilidad Bajo' %></th>
+    <td>
+      <%= text_field_tag :bottom_ratio, @bottom_ratio, :onchange => 'update_vals();' %>
+      <%= text_field_tag :bottom_price, '0', :disabled => true %>
+    </td>
+  </tr>
+</tbody>
+
+</table>

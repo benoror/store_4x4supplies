@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>4x4 Supplies</title>
+<link rel="shortcut icon" href="/favicon.ico" />
+<%= stylesheet_link_tag 'application' %>
+<%= javascript_include_tag :defaults %>
+</head>
+<body>
+
+   <!-- Begin Wrapper -->
+   <div id="wrapper">
+
+     <!-- Begin Left Column -->
+     <div id="leftcolumn">
+          <%= image_tag 'logo.png' %>
+		  <%= '<b>4x4supplies.com.mx</b>' unless logged_in? %>
+          <br />
+          <br />
+          <% unless controller.controller_name == 'store' %>
+            <div id="menu"> 
+              <ul> 
+                <li><%= link_to 'Inicio', login_path, :class => ('current' if controller.controller_name == 'sessions') %></li>
+                <% if logged_in? %>
+                  <li><%= link_to 'Productos', products_path, :class => ('current' if ['products','categories','suppliers'].include? controller.controller_name )  %></li>
+                  <li><%= link_to 'Inventarios', inventories_path, :class => ('current' if controller.controller_name == 'inventories') %></li>
+                  <li><%= link_to 'Ventas', sales_path, :class => ('current' if controller.controller_name == 'sales') %></li>
+                  <li><%= link_to 'Clientes', customers_path, :class => ('current' if ['customers','bids'].include? controller.controller_name ) %></li>
+                  <li><%= link_to 'Gastos', expenses_path, :class => ('current' if controller.controller_name == 'expenses') %></li>
+                  <li><%= link_to 'Bancos', transactions_path, :class => ('current' if controller.controller_name == 'transactions') %></li>
+                  <li><%= link_to 'Configuracion', { :controller => "settings" }, { :class => ('current' if controller.controller_name == 'settings') } %></li>
+                  <li><%= link_to 'Salir', logout_path %></li>
+                <% else %>
+                  <li><%= link_to 'Tienda', {:controller => :store, :action => :index}, :class => ('current' if controller.controller_name == 'store' ) %></li>
+                <% end %>
+              </ul> 
+            </div>
+            <span class="login"><%= current_user.login if logged_in? %></span>
+          <% else %>
+            <div id="menu"> 
+              <ul> 
+                <li><%= link_to 'Novedades', { :controller => :store }, { :class => ('current' unless params[:cat]) } %></li>
+                <% Category.all.each do |category| %>
+                  <li><%= link_to category.name, { :controller => :store, :cat => category.id }, { :class => ('current' if params[:cat] == category.id.to_s) } %></li>
+                <% end %>
+              </ul> 
+            </div>
+          <% end %>
+     </div>
+     <!-- End Left Column -->
+
+     <!-- Begin Right Column -->
+     <% if flash[:notice] %>
+        <div id="noticecolumn">
+                <%= flash[:notice] %>
+        </div>
+     <% end %>
+     <!-- End Right Column -->
+
+     <!-- Begin Right Column -->
+     <div id="rightcolumn">
+            <%= yield %>
+     </div>
+     <!-- End Right Column -->
+
+   </div>
+   <!-- End Wrapper -->
+
+</body>
+</html>

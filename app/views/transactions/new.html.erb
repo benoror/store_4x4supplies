@@ -1,0 +1,36 @@
+<h1>Nueva transaccion</h1>
+
+<% form_for(@transaction) do |f| %>
+
+  <div id="submenu">
+    <%= f.submit 'Guardar Transaccion' %>
+  </div>
+
+  <table>
+
+  <caption>
+    <%= f.error_messages %>
+  </caption>
+
+  <tbody>
+    <tr>
+      <th width="25%"><%= f.label 'Fecha' %></th>
+      <td><%= f.date_select :date %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Concepto' %></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Cargo' %></th>
+      <td><%= f.text_field :charge %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Abono' %></th>
+      <td><%= f.text_field :payment %></td>
+    </tr>
+  </tbody>
+
+  </table>
+
+<% end %>

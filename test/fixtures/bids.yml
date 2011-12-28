@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  product: MyString
+  barcode: MyString
+  vehicle: MyString
+  description: MyText
+  price: 9.99
+  notified: false
+  customer_id: 1
+
+two:
+  product: MyString
+  barcode: MyString
+  vehicle: MyString
+  description: MyText
+  price: 9.99
+  notified: false
+  customer_id: 1

@@ -1,0 +1,28 @@
+<h1>Nueva categoria</h1>
+
+<% form_for(@category) do |f| %>
+
+  <div id="submenu">
+    <%= f.submit 'Guardar Categoria' %>
+  </div>
+
+  <table>
+
+  <caption>
+    <%= f.error_messages %>
+  </caption>
+
+  <tbody>
+    <tr>
+      <th width="25%"><%= f.label 'Nombre' %></th>
+      <td><%= f.text_field :name, :size => 50 %></td>
+    </tr>
+    <tr>
+      <th><%= f.label 'Descripcion' %></th>
+      <td><%= f.text_area :description, :rows => 3, :cols => 49 %></td>
+    </tr>
+  </tbody>
+
+  </table>
+
+<% end %>

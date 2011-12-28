@@ -1,0 +1,45 @@
+<h1>Clientes</h1>
+
+<div id="submenu">
+  <%= link_to 'Nuevo Cliente', new_customer_path %>
+  <%= link_to 'Ver Cotizaciones', bids_path %>
+  <%= link_to '#Enviar Noticia', '' %>
+</div>
+
+<table>
+
+<thead>
+  <tr>
+    <th>Cliente</th>
+    <th>Cotizaciones Pendientes</th>
+  </tr>
+</thead>
+
+<tbody>
+<% @customers.each do |customer| %>
+  <tr title="Creo: <%= customer.who %> Actualizo: <%= customer.who_last %>">
+    <td>
+      <%= link_to customer.fullname, edit_customer_path(customer) %><br />
+      Tel(s): <%=h customer.telephone %><br />
+      Email: <%=h customer.email %><br />
+      Vehiculo(s): <%=h customer.vehicle %><br />
+      Club: <%=h customer.club %><br />
+      RFC: <%=h customer.ssn %><br />
+      Direccion: <%=h customer.address1 %> <%=h customer.address2 %><br />
+      <br />
+      <%= link_to 'Facturar', { :controller => "invoices", :action => "new", :id => customer }, :class => "button-to" %>
+      <%= link_to 'Cotizar', { :controller => "bids", :action => "new", :id => customer }, :class => "button-to" %>
+      <br />
+      <br />
+    </td>
+	<td>
+		<% customer.bids.each do |bid| %>
+			<%= link_to bid.product, edit_bid_path(bid) unless bid.notified%>
+			<br />
+		<% end %>
+	</td>
+  </tr>
+<% end %>
+</tbody>
+
+</table>
